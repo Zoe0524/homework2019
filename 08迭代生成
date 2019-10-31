@@ -1,0 +1,20 @@
+#八皇后问题
+def conflict(placed,next_chess_x):
+    next_chess_y=len(placed)
+    for i in range(next_chess_y):
+        if abs(placed[i]-next_chess_x) in (0,abs(i-next_chess_y)): #同行、同列、同斜线
+            return True
+    return False
+
+def place_queens(num=8,placed_tuple=()):
+    for i in range(num):
+        if not conflict(placed_tuple,i):
+            if len(placed_tuple)==num-1:
+                yield (i,)
+            else:
+                for j in place_queens(num,placed_tuple+(i,)):
+                    yield (i,)+j
+
+res=list(place_queens(8))
+print(res)
+print(len(res))
